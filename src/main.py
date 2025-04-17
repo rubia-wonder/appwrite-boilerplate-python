@@ -2,11 +2,14 @@ from appwrite.client import Client
 from appwrite.services.users import Users
 from appwrite.exception import AppwriteException
 import os
+import sys
 from dotenv import load_dotenv
 import uvicorn
-from api import routes_root, routes_fetch_formats, routes_download
+# from api import routes_root, routes_fetch_formats, routes_download
 from fastapi import FastAPI
 
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from api import routes_root, routes_fetch_formats, routes_download
 # Load environment variables from .env file
 load_dotenv()
 
