@@ -1,13 +1,9 @@
 from fastapi import FastAPI
-import sys
 import os
+import sys
 from dotenv import load_dotenv
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from api import routes_root, routes_fetch_formats, routes_download
 
-
-# Load .env vars if available
 load_dotenv()
 
 endpoint = os.getenv("APPWRITE_FUNCTION_API_ENDPOINT")
@@ -20,3 +16,17 @@ app = FastAPI()
 app.include_router(routes_root.router)
 app.include_router(routes_download.router)
 app.include_router(routes_fetch_formats.router)
+
+# This is needed for Appwrite custom function runtime
+async def main(context):
+    # Appwrite just expects this to exist
+    return {
+        "statusCode": 200,
+        "headers": {"Content-Type": "application/json"},
+        "body": "✅ FastAPI Appwrite Function Executed"
+    }
+
+# This is for local development
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("src.main:app", host="127.0.0.1", port=8000, reload=True)
