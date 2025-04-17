@@ -1,7 +1,7 @@
 FROM python:3.11-slim
 
 # Set working directory
-WORKDIR /app
+WORKDIR /usr/src
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y gcc
@@ -17,7 +17,7 @@ COPY . .
 ENV PYTHONUNBUFFERED=1
 
 # Expose FastAPI port
-EXPOSE 8000
+EXPOSE 3000
 
 # Run FastAPI app using Uvicorn
-CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "3000"]
